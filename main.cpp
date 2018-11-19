@@ -16,7 +16,7 @@ int main()
     // cout << "Calea directorului: ";
     // getline(cin, source_directory);
 
-    source_directory = "/Users/eduard/Desktop/ospatuldepiatra";
+    source_directory = "/Users/eduard/Desktop/deaCpp";
 
     list_directory(source_directory.c_str());
 
