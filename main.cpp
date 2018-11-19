@@ -52,11 +52,13 @@ void copyFile_(const char* inDir,const char* outDir){
         if(in.st_mtime>out.st_mtime || in.st_size>out.st_size){ // if the last modify of the source file is higher than the destination
             DeleteFile(outd.c_str());
             CopyFile(ind.c_str(), outd.c_str(), 1); // delete and copy the new file
-            cout << "--> Updated" ;
+            cout << " --> Updated" << "\n";
+        }else{
+            cout << "\n";
         }
-        cout << "\n";
     }else{
         CopyFile(ind.c_str(),outd.c_str(),1); // only copy file cause it doesn't exist
+        cout << "--> File Copied"   << "\n";
     }
 }
 
@@ -89,24 +91,15 @@ void copyDir_(const char *inputDir, string outDir)
                 tmpOut.append( "\\" );
                 tmpOut.append( tmpStr ); // Add file/folder name to the destination "URL"
 
-                if ( is_( tmpOut.c_str() ) == 0 ) // Test if file/folder exists
+                cout << entry->d_name;
+                if (is_dir(tmpStrPath.c_str()))
                 {
-                    cout << entry->d_name;
-                    if (is_dir(tmpStrPath.c_str())) // Test if is a file or a folder
+                    if ( is_( tmpOut.c_str() ) == 0 ) // Test if file/folder exists
                     {
                         cout << "\n";
-                        copyDir_(tmpStrPath.c_str(), tmpOut); // Is a folder so we only open it
-                    }else{
-                        outStrPath = outDir;
-                        outStrPath.append( "\\" );
-                        outStrPath.append( tmpStr );
-                        copyFile_(tmpStrPath.c_str(), outStrPath.c_str());  // Is a file so we in case it's different we update it
+                        copyDir_(tmpStrPath.c_str(), tmpOut);
                     }
-                }
-                else
-                {
-                    cout << entry->d_name;
-                    if (is_dir(tmpStrPath.c_str()))
+                    else
                     {
                         cout << "--> Folder Created" << "\n";
                         // Create Folder on the destination path
@@ -117,16 +110,14 @@ void copyDir_(const char *inputDir, string outDir)
 
                         copyDir_(tmpStrPath.c_str(), outStrPath); // Give to this SAME function the new path to copy files in the new directory
                     }
-                    else
-                    {
-                        cout << "--> File Copied"   << "\n";
-                        // copy file on the destination path
-                        outStrPath = outDir;
-                        outStrPath.append( "\\" );
-                        outStrPath.append( tmpStr );
-
-                        copyFile_(tmpStrPath.c_str(), outStrPath.c_str()); // copy file to backup folder
-                    }
+                }
+                else
+                {
+                    // copy file on the destination path
+                    outStrPath = outDir;
+                    outStrPath.append( "\\" );
+                    outStrPath.append( tmpStr );
+                    copyFile_(tmpStrPath.c_str(), outStrPath.c_str()); // copy file to backup folder
                 }
             }
         }
