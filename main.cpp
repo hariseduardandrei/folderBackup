@@ -13,10 +13,10 @@ int main()
 {
     string source_directory;
 
-    // cout << "Calea directorului: ";
-    // getline(cin, source_directory);
+    cout << "Calea directorului: ";
+    getline(cin, source_directory);
 
-    source_directory = "/Users/eduard/Desktop/deaCpp";
+    // source_directory = "/Users/eduard/Desktop/deaCpp";
 
     list_directory(source_directory.c_str());
 
